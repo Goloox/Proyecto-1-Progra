@@ -9,10 +9,10 @@ namespace inteto
     internal class Program
     {
 
-        
 
 
-                 class Estudiante
+
+        class Estudiante
         {
             public string Cedula { get; set; }
             public string Nombre { get; set; }
@@ -79,7 +79,7 @@ namespace inteto
                                 break;
                             default:
                                 Console.WriteLine("");
-                                Console.WriteLine("Error: Por favor, ingrese un número válido entre 1 y 7.");
+                                Console.WriteLine("Error: Por favor, ingrese un número válido entre 1 y 8.");
                                 Console.WriteLine("");
                                 break;
                         }
@@ -92,7 +92,7 @@ namespace inteto
                         opcion = 0;
                     }
 
-                } while (opcion != 7);
+                } while (opcion != 8);
             }
 
             static void InicializarVectores()
@@ -127,7 +127,7 @@ namespace inteto
                             string nombreInput;
                             do
                             {
-                                Console.WriteLine("EL NOMBRE DE SER ESCRITO SEGUIDO Y LO SEPARA ESCRIBIR PA PRIMERA PALABRA DEL APELLIDO EN MAYUSCULA");
+                                Console.WriteLine("ESCRIBIR NOMBRE EN MAYUSCULAS Y APELLIDO EN MINUSCULAS");
                                 Console.Write("Nombre: ");
                                 nombreInput = Console.ReadLine();
                                 if (nombreInput.Length < 2 || !nombreInput.All(c => char.IsLetter(c)))
@@ -271,7 +271,7 @@ namespace inteto
                     opcion = int.Parse(Console.ReadLine());
 
                     switch (opcion)
-                    { 
+                    {
                         case 1:
                             ReporteEstudiantesPorCondicion();
                             break;
@@ -347,7 +347,7 @@ namespace inteto
                 estudiantes.Where(estudiante => estudiante != null).ToList().ForEach(estudiante =>
                 {
                     Console.WriteLine($"================================================================================================================================================================================" +
-                        $"Cédula: {estudiante.Cedula}, Nombre: {estudiante.Nombre} , Promedio{ estudiante.Promedio} " +
+                        $"Cédula: {estudiante.Cedula}, Nombre: {estudiante.Nombre} , Promedio{estudiante.Promedio} " +
                         $"" +
                         $"================================================================================================================================================================================");
                 });
@@ -393,49 +393,53 @@ namespace inteto
 
             static void AumentarNumeroEsrudiantes()
             {
-                Console.WriteLine("1. Añadir más estudiantes");
-                Console.WriteLine("2. Regresar al menú principal");
 
-                try
+
+                Estudiante[] estudiantes = new Estudiante[0]; // Asegúrate de inicializar el arreglo de estudiantes
+
                 {
-                    Console.Write("Seleccione una opción (1-2): ");
-                    int opcion = int.Parse(Console.ReadLine());
 
-                    switch (opcion)
-                    {
-                        case 1:
-                            Console.Write("Ingrese la cantidad de estudiantes a agregar: ");
-                            int cantidadNueva = int.Parse(Console.ReadLine());
 
-                            // Crear un nuevo arreglo con la longitud actual + la cantidad nueva
-                            Estudiante[] nuevosEstudiantes = new Estudiante[estudiantes.Length + cantidadNueva];
 
-                            // Copiar los estudiantes existentes al nuevo arreglo
-                            estudiantes.CopyTo(nuevosEstudiantes, 0);
 
-                            // Asignar el nuevo arreglo a la variable estudiantes
-                            estudiantes = nuevosEstudiantes;
 
-                            Console.WriteLine($"Se han agregado {cantidadNueva} estudiantes. Ahora hay un total de {estudiantes.Length} estudiantes.");
-                            break;
 
-                        case 2:
-                            Console.WriteLine("Regresando al menú principal...");
-                            break;
 
-                        default:
-                            Console.WriteLine("Opción inválida. Por favor, ingrese 1 o 2.");
-                            break;
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Error: Por favor, ingrese un formato válido para la opción.");
+                    Console.Write("Ingrese la cantidad de estudiantes a agregar: ");
+                    int cantidadNueva = int.Parse(Console.ReadLine());
+
+                    // Crear un nuevo arreglo con la longitud actual + la cantidad nueva
+                    Estudiante[] nuevosEstudiantes = new Estudiante[estudiantes.Length + cantidadNueva];
+
+                    // Copiar los estudiantes existentes al nuevo arreglo
+                    estudiantes.CopyTo(nuevosEstudiantes, 0);
+
+                    // Asignar el nuevo arreglo a la variable estudiantes
+                    estudiantes = nuevosEstudiantes;
+
+                    Console.WriteLine($"Se han agregado {cantidadNueva} estudiantes. Ahora hay un total de {estudiantes.Length} estudiantes.");
+
+
+
+
+
                 }
             }
-        }
-            }
+
+
+
+
+
         }
 
 
+
+
+
+    }
+}
+        
+  
+
+         
     
