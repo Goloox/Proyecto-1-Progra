@@ -38,7 +38,8 @@ namespace inteto
                     Console.WriteLine("4. Modificar estudiantes");
                     Console.WriteLine("5. Eliminar estudiantes");
                     Console.WriteLine("6. Submenú de reportes");
-                    Console.WriteLine("7. Salir");
+                    Console.WriteLine("7. Aumentar numero de estudaintes");
+                    Console.WriteLine("8. Salir");
 
                     try
                     {
@@ -69,6 +70,9 @@ namespace inteto
                                 SubmenuReportes();
                                 break;
                             case 7:
+                                AumentarNumeroEsrudiantes();
+                                break;
+                            case 8:
                                 Console.WriteLine("");
                                 Console.WriteLine("Saliendo del programa...");
                                 Console.WriteLine("");
@@ -123,13 +127,14 @@ namespace inteto
                             string nombreInput;
                             do
                             {
+                                Console.WriteLine("EL NOMBRE DE SER ESCRITO SEGUIDO Y LO SEPARA ESCRIBIR PA PRIMERA PALABRA DEL APELLIDO EN MAYUSCULA");
                                 Console.Write("Nombre: ");
                                 nombreInput = Console.ReadLine();
-                                if (!nombreInput.All(char.IsLetter))
+                                if (nombreInput.Length < 2 || !nombreInput.All(c => char.IsLetter(c)))
                                 {
-                                    Console.WriteLine("Error: El nombre debe contener solo letras.");
+                                    Console.WriteLine("Error: El nombre debe tener más de una letra y contener solo letras.");
                                 }
-                            } while (!nombreInput.All(char.IsLetter));
+                            } while (nombreInput.Length < 2 || !nombreInput.All(c => char.IsLetter(c)));
 
                             string promedioInput;
                             do
@@ -258,7 +263,8 @@ namespace inteto
                     Console.WriteLine("");
                     Console.WriteLine("1. Reporte Estudiantes por Condición");
                     Console.WriteLine("2. Reporte Todos los datos");
-                    Console.WriteLine("3. Regresar al menú principal");
+                    Console.WriteLine("3. Reporte Todos los Estudiantes");
+                    Console.WriteLine("4. Regresar al menú principal");
                     Console.WriteLine("");
                     Console.Write("Seleccione una opción del 1-2 para continuar o 3 para regresar al menú principal: ");
                     Console.WriteLine("");
@@ -273,6 +279,9 @@ namespace inteto
                             ReporteTodosLosDatos();
                             break;
                         case 3:
+                            ImprimirTodosLosEstudiantes();
+                            break;
+                        case 4:
                             Console.WriteLine("");
                             Console.WriteLine("Usted está regresando al menú principal...");
                             Console.WriteLine("");
@@ -330,7 +339,22 @@ namespace inteto
                     }
                 }
             }
+            static void ImprimirTodosLosEstudiantes()
+            {
+                Console.WriteLine("Lista de todos los estudiantes:");
+                Console.WriteLine("");
 
+                estudiantes.Where(estudiante => estudiante != null).ToList().ForEach(estudiante =>
+                {
+                    Console.WriteLine($"================================================================================================================================================================================" +
+                        $"Cédula: {estudiante.Cedula}, Nombre: {estudiante.Nombre} , Promedio{ estudiante.Promedio} " +
+                        $"" +
+                        $"================================================================================================================================================================================");
+                });
+
+                Console.WriteLine("====================================================================================================");
+                Console.WriteLine("                 < PULSE CUALQUIER TECLA PARA ABANDONAR >");
+            }
             static void ReporteTodosLosDatos()
             {
                 int cantidadEstudiantes = 0;
@@ -366,9 +390,52 @@ namespace inteto
                 if (estudianteMenor != null)
                     Console.WriteLine($"Estudiante(s) con el promedio menor: Cédula: {estudianteMenor.Cedula}, Nombre: {estudianteMenor.Nombre}, Promedio: {estudianteMenor.Promedio}");
             }
+
+            static void AumentarNumeroEsrudiantes()
+            {
+                Console.WriteLine("1. Añadir más estudiantes");
+                Console.WriteLine("2. Regresar al menú principal");
+
+                try
+                {
+                    Console.Write("Seleccione una opción (1-2): ");
+                    int opcion = int.Parse(Console.ReadLine());
+
+                    switch (opcion)
+                    {
+                        case 1:
+                            Console.Write("Ingrese la cantidad de estudiantes a agregar: ");
+                            int cantidadNueva = int.Parse(Console.ReadLine());
+
+                            // Crear un nuevo arreglo con la longitud actual + la cantidad nueva
+                            Estudiante[] nuevosEstudiantes = new Estudiante[estudiantes.Length + cantidadNueva];
+
+                            // Copiar los estudiantes existentes al nuevo arreglo
+                            estudiantes.CopyTo(nuevosEstudiantes, 0);
+
+                            // Asignar el nuevo arreglo a la variable estudiantes
+                            estudiantes = nuevosEstudiantes;
+
+                            Console.WriteLine($"Se han agregado {cantidadNueva} estudiantes. Ahora hay un total de {estudiantes.Length} estudiantes.");
+                            break;
+
+                        case 2:
+                            Console.WriteLine("Regresando al menú principal...");
+                            break;
+
+                        default:
+                            Console.WriteLine("Opción inválida. Por favor, ingrese 1 o 2.");
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Error: Por favor, ingrese un formato válido para la opción.");
+                }
+            }
+        }
+            }
         }
 
-    }
-}
 
     
